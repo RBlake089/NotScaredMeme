@@ -16,14 +16,29 @@ const initdb = async () =>
 // Method to put content into the IndexedDB database using the idb module
 export const putDb = async (content) => {
   try {
+    // Logging a message to indicate that we are attempting to put data into the database
     console.log('PUT to the database');
+    
+    // Opening the 'jate' database with version 1
     const jateDb = await openDB('jate', 1);
+    
+    // Starting a new transaction on the 'jate' object store with readwrite access
     const tx = jateDb.transaction('jate', 'readwrite');
+    
+    // Getting a reference to the 'jate' object store
     const store = tx.objectStore('jate');
+    
+    // Putting the data into the 'jate' object store using a 'put' operation.
+    // Here, { id: 1, value: content } is the data being stored, and 'id' is the key.
     const request = store.put({ id: 1, value: content });
+    
+    // Waiting for the 'put' operation to complete successfully
     await request;
-    console.log('data saved to the database', content);
+    
+    // Logging a message to indicate that the data has been successfully saved to the database
+    console.log('Data saved to the database', content);
   } catch (error) {
+    // Handling any errors that occurred during the database operation
     console.error('Error putting data into the database', error);
   }
 };
