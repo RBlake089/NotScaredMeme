@@ -37,6 +37,17 @@ const handleInstallClick = async () => {
 
 
 // TODO: Add an handler for the `appinstalled` event
-window.addEventListener('appinstalled', (event) => {
-    window.deferredPrompt = null;//
-});
+// Function to clear the stored PWA installation prompt event
+const clearDeferredPrompt = () => {
+  // Set the window.deferredPrompt to null, effectively clearing the stored prompt event
+  window.deferredPrompt = null;
+};
+
+// Event listener to listen for the "beforeinstallprompt" event which is triggered when a PWA installation prompt is available
+window.addEventListener('beforeinstallprompt', showInstallButton);
+
+// Event listener for the custom install button click, which initiates the PWA installation prompt
+butInstall.addEventListener('click', handleInstallClick);
+
+// Event listener to listen for the "appinstalled" event which is triggered when the PWA is successfully installed
+window.addEventListener('appinstalled', clearDeferredPrompt);
