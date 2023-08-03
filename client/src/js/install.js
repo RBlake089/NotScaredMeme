@@ -14,19 +14,27 @@ const showInstallButton = (event) => {
 
 
 // TODO: Implement a click event handler on the `butInstall` element
-butInstall.addEventListener('click', async () => {
-    const promptEvent = window.deferredPrompt;
+// Function to handle the user click on the custom install button for PWA installation
+const handleInstallClick = async () => {
+  // Get the stored PWA installation prompt event from the window object
+  const promptEvent = window.deferredPrompt;
 
+  // Check if the prompt event is available
   if (!promptEvent) {
+    // If the prompt event is not available, return without doing anything
     return;
   }
 
-  promptEvent.prompt();
+  // Show the PWA installation prompt to the user
+  await promptEvent.prompt();
 
-  window.deferredPrompt = null;//
+  // Reset the stored prompt event to null since it can only be used once
+  window.deferredPrompt = null;
 
-  butInstall.classList.toggle('hidden', true);
-});
+  // After the prompt has been shown and handled, hide the install button again
+  butInstall.classList.add('hidden');
+};
+
 
 // TODO: Add an handler for the `appinstalled` event
 window.addEventListener('appinstalled', (event) => {
